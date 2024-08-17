@@ -11,9 +11,10 @@ services:
       - dokploy-network
     labels:
       - traefik.enable=true
-      - traefik.http.routers.medisync-uptime.rule=Host(`${APP_URL}`)
-      - traefik.http.routers.medisync-uptime.entrypoints=web
-      - traefik.http.services.medisync-uptime.loadbalancer.server.port=${PORT}
+      - traefik.http.routers.medisync-uptime.rule=Host(`medisync-uptime.toctive.com`)
+      - "traefik.http.routers.medisync-uptime.entrypoints=websecure"
+      - "traefik.http.routers.medisync-uptime.tls.certResolver=letsencrypt"
+      - traefik.http.services.medisync-uptime.loadbalancer.server.port=3001
 
 networks:
   dokploy-network:
