@@ -3,7 +3,18 @@ services:
     image: louislam/uptime-kuma:1
     volumes:
       - ./data:/app/data
-    ports:
+    expose:
       # <Host Port>:<Container Port>
-      - 3001:3001
+      - 3001
     restart: unless-stopped
+    networks:
+      - dokploy-network
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.medisync-uptime.rule=Host(`${APP_URL}`)
+      - traefik.http.routers.medisync-uptime.entrypoints=web
+      - traefik.http.services.medisync-uptime.loadbalancer.server.port=${PORT}
+
+networks:
+  dokploy-network:
+    external: true
